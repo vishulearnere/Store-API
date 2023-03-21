@@ -1,31 +1,22 @@
 require('dotenv').config()
 
-const express = require('express')
-const app = express()
-
-const productdata = require('./products.json')
+const productData = require('./products.json') // Data in products.json is wrapped in array 
 const productSchema = require('./models/product')
 const connectDB = require('./db/connect')
-
-//Middleware
-// app.use()
-app.use(express.json())
-
 
 
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_URI)
-        
         console.log('database is connected')
         await productSchema.deleteMany()
-        await productSchema.create(productdata)
-        console.log('sucess')
-        app.listen('3000', () => {
-            console.log('server is listening at port 5000. ')
-        })
+        await productSchema.create(productData)
+        console.log('Sucess')
+        process.exit(0) // to exit the file automatically  when our data is successfully populated 
+
     } catch (error) {
         console.log(error)
+        process.exit(1) // to exit the file automatically after consoling the error
     }
 
 }

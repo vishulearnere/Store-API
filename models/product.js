@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
     },
     price: {
         type: Number,
-        required: [true, 'provide price must be provided'],
+        required: [true, 'Product price must be provided'],
     },
     featured: {
         type: Boolean,
@@ -27,7 +27,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         enum: {
             values: ['ikea', 'liddy', 'caressa', 'marcos'],
-            mesaage: '{Value} is not supported'
+            mesaage: '{VALUE} is not supported' //change Value to VALUE
         }
         // enum:['ikea','liddy','caressa','marcos'],
 
@@ -36,3 +36,4 @@ const productSchema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model('Product', productSchema)
+// docum :- https://mongoosejs.com/docs/models.html

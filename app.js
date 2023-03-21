@@ -1,4 +1,5 @@
 require('dotenv').config()
+
 //  Package - wrapper for aync error
 require('express-async-errors')
 
@@ -6,8 +7,8 @@ const express = require('express')
 const app = express()
 const notFoundMiddleware = require('./middleware/not-found')
 const errorMiddleware = require('./middleware/error-handler')
-const routes = require('./routes/products')
-// const errorHandler = require('./routes') 
+const productRouter = require('./routes/products')
+
 
 const connectDB = require('./db/connect')
 
@@ -22,18 +23,19 @@ app.get('/', (req, res) => {
 
 })
 
-app.use('/api/v1/products', routes)
-app.use(errorMiddleware) // It has error as parameter so it will not excecute when a get url is asked. 
+app.use('/api/v1/products', productRouter)
+app.use(errorMiddleware) // It has error as parameter so it will  only  excecute 
+// when next(error,req, res, next) is callled with error as parameter . 
 app.use(notFoundMiddleware)
 
 
-PORT = process.env.PORT || 3000
+const port = process.env.PORT || 3000
 const start = async () => {
     try {
         connectDB(process.env.MONGO_URI)
         console.log('connected to DB')
-        app.listen(PORT, () => {
-            console.log(`Server is listening at PORT NO ${PORT}... `)
+        app.listen(port, () => {
+            console.log(`Server is listening at PORT NO ${port}... `)
 
         })
 
@@ -44,7 +46,7 @@ const start = async () => {
 }
 start()
 
-console.log(Date.now())
+// console.log(Date.now())
 
 
 
